@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    <NEWS ID="1" TITLE="test title 1" NEWS_DATE="2014-12-12" BRIEF="asd 1" CONTENT="Test content -1"/>
+    <NEWS ID="2" TITLE="test title 2" NEWS_DATE="2014-12-12" BRIEF="asd 2" CONTENT="Test content -2 "/>
+    <NEWS ID="3" TITLE="test title 3" NEWS_DATE="2014-12-12" BRIEF="asd 3" CONTENT="Test content -3 "/>
+    <NEWS ID="4" TITLE="test title 4" NEWS_DATE="2014-12-12" BRIEF="asd 4" CONTENT="Test content -4 "/>
+    <NEWS ID="5" TITLE="test title 5" NEWS_DATE="2014-12-12" BRIEF="asd 5" CONTENT="Test content -5"/>
+    <NEWS ID="6" TITLE="test title 6" NEWS_DATE="2014-12-12" BRIEF="asd 6" CONTENT="Test content -6 "/>   
+</dataset>

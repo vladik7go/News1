@@ -1,0 +1,99 @@
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+
+<form-validation>
+	<formset>
+		<form name="newsForm">
+			<field property="news.title" depends="required,maxlength,minlength">
+				<msg name="required" key="err.title.required" />
+				<msg name="maxlength" key="err.title.length" />
+				<msg name="minlength" key="err.title.length" />
+				<arg name="maxlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="maxlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<arg name="minlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="minlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>100</var-value>
+				</var>
+			</field>
+
+			<field property="news.brief" depends="required,maxlength,minlength">
+				<msg name="required" key="err.brief.required" />
+				<msg name="maxlength" key="err.brief.length" />
+				<msg name="minlength" key="err.brief.length" />
+				<arg name="maxlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="maxlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<arg name="minlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="minlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>500</var-value>
+				</var>
+			</field>
+
+			<field property="news.content" depends="required,maxlength,minlength">
+				<msg name="required" key="err.content.required" />
+				<msg name="maxlength" key="err.content.length" />
+				<msg name="minlength" key="err.content.length" />
+				<arg name="maxlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="maxlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<arg name="minlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="minlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>2000</var-value>
+				</var>
+			</field>
+
+			<field property="dateString" depends="required,maxlength,minlength,date">
+				<msg name="required" key="err.date.required" />
+				<msg name="maxlength" key="err.date.length" />
+				<msg name="minlength" key="err.date.length" />
+				<msg name="date" key="err.date.format" />
+				<arg name="maxlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="maxlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<arg name="minlength" key="${var:minlength}" position="0"
+					resource="false" />
+				<arg name="minlength" key="${var:maxlength}" position="1"
+					resource="false" />
+				<var>
+					<var-name>minlength</var-name>
+					<var-value>1</var-value>
+				</var>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>10</var-value>
+				</var>
+			</field>
+
+		</form>
+	</formset>
+</form-validation>

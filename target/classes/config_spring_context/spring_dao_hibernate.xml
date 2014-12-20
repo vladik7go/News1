@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+           
+       <context:property-placeholder location='classpath:config.properties'/>
+
+	
+	<!-- ========================================================================= -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value='${db.driverClass}' />
+		<property name="url" value='${db.url}' />
+		<property name="username" value='${db.user}' />
+		<property name="password" value='${db.password}' />
+		<!-- <property name="schemaNames" value="PUBLIC" /> -->
+	</bean>
+	<!-- ========================================================================= -->
+	
+	<!-- Hibernate DB connection -->
+	<bean id="hibernateUtils" class="com.epam.news.util.HibernateUtil"></bean>
+	<bean id="newsDaoHibernate" class="com.epam.news.database.dao.NewsDAOHibernate">
+		<property name="hibernateUtil">
+			<ref bean="hibernateUtils" />
+		</property>
+	</bean>
+	<!-- END Hibernate DB connection -->
+	
+	<!-- ========================================================================= -->
+	
+	<!-- NewsService -->
+	<bean id="NewsService" class="com.epam.news.service.NewsService">
+		<!-- <property name="newsDao" ref="NewsDao" /> -->
+		<!-- <property name="newsDao" ref="jdbcDao" /> -->
+		<property name="newsDao" ref="newsDaoHibernate" />
+		<!-- <property name="newsDao" ref="newsDaoJPA" /> -->
+	</bean>
+	
+	<!-- ========================================================================= -->
+	
+	<!-- Actions -->
+	<bean
+		name="/NewsList, /ViewNews, /EditNews, /DeleteNews, /DeleteGroupOfNews, /AddNews, /SaveNews, /Cancel, /ChangeLocale, /Back"
+		id="newsAction" class="com.epam.news.action.NewsAction">
+		<property name="newsService" ref="NewsService" />
+	</bean>
+	
+</beans>

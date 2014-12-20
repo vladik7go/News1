@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts-config PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+	<!-- Forms -->
+	<form-beans>
+		<form-bean name="newsForm" type="com.epam.news.form.NewsForm" />
+	</form-beans>
+	
+
+	<!-- Global forwards -->
+	<global-forwards>
+		<forward name="mainPage" path="/NewsList.do" />
+		<forward name="newsList" path="newsList.page" />
+		<forward name="viewNews" path="viewNews.page" />
+		<forward name="viewNewsAction" path="/ViewNews.do" />
+		<forward name="addNews" path="addNews.page" />
+		<forward name="editNews" path="addNews.page" />
+		<forward name="error" path="error.page" />
+		<forward name="back" path="/Back.do" />
+	</global-forwards>
+
+	<!-- Actions -->
+	<action-mappings>
+		<action path="/NewsList" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="viewNewsList" validate="false">
+		</action>
+
+		<action path="/ChangeLocale" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="changeLocale" validate="false">
+		</action>
+
+		<action path="/ViewNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="viewNews" scope="session" validate="false">
+		</action>
+
+		<action path="/EditNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="editNews" validate="false">
+		</action>
+
+		<action path="/DeleteGroupOfNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="deleteGroupOfNews" validate="false">
+		</action>
+
+		<action path="/DeleteNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="deleteNews" validate="false">
+		</action>
+
+		<action path="/AddNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="addNews" validate="false">
+		</action>
+
+		<action path="/SaveNews" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="save" input="addNews.page">
+		</action>
+
+		<action path="/Cancel" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="cancel" validate="false">
+		</action>
+		
+		<action path="/Back" name="newsForm"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			parameter="back" validate="false">
+		</action>
+		
+
+	</action-mappings>
+
+	<!-- Tiles processor -->
+	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
+
+	<!-- Internationalization -->
+	<message-resources parameter="ApplicationResource"
+		null="false" />
+
+	<!-- Struts tiles configuration -->
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
+	</plug-in>
+	
+	<!-- Spring integration -->
+	<plug-in className="org.springframework.web.struts.ContextLoaderPlugIn">
+		<set-property property="contextConfigLocation" value="/WEB-INF/applicationContext.xml" />
+	</plug-in>
+	
+	
+	<!-- Validation on server side -->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/WEB-INF/validator-rules.xml, /WEB-INF/validator-user.xml" />
+	</plug-in>
+	
+	
+	
+</struts-config>
