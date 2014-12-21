@@ -8,10 +8,10 @@
        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
        
-     <!--   <import resource="classpath:/config_spring_context/spring_dao_hibernate.xml" /> -->
-       <import resource="classpath:/config_spring_context/spring_dao_jdbc.xml" />
-      <!--  <import resource="classpath:/config_spring_context/spring_dao_jpa.xml" /> -->
-    <!--   <import resource="classpath:/config_spring_context/spring_dao_handMade.xml" /> -->
+      <!--  <import resource="classpath:/config_spring_context/spring_dao_hibernate.xml" /> -->
+       <!-- <import resource="classpath:/config_spring_context/spring_dao_jdbc.xml" /> -->
+       <import resource="classpath:/config_spring_context/spring_dao_jpa.xml" />
+      <!-- <import resource="classpath:/config_spring_context/spring_dao_handMade.xml" /> -->
        
 	
 </beans>

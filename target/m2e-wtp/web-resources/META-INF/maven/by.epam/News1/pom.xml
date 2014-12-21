@@ -25,7 +25,8 @@
 			<spring.version>3.2.3.RELEASE</spring.version>
 		
 		<!-- Hibernate / JPA -->
-		<hibernate.version>4.2.1.Final</hibernate.version>	
+		<!-- <hibernate.version>4.2.1.Final</hibernate.version>	 -->
+		<hibernate.version>4.3.7.Final</hibernate.version>	
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -164,6 +165,12 @@
              </artifactId>
              <version>${hibernate.version}</version>
          </dependency>  
+         
+         <dependency>
+	<groupId>javax.persistence</groupId>
+	<artifactId>persistence-api</artifactId>
+	<version>1.0.2</version>
+</dependency>
 		
 		<!-- Log4j -->
 		<dependency>

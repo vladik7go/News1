@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,7 +19,9 @@ import javax.persistence.Table;
  * @author Ivan_Filimonau
  *
  */
-
+@NamedQueries({
+@NamedQuery(name = "newsFindAll", query = "FROM News n ORDER BY date DESC, id DESC"),
+@NamedQuery(name = "deleteManyNewsQuery", query = "DELETE FROM News WHERE id IN(:deleteIds)") })
 @Entity
 @Table(name = "NEWS")
 public class News implements Serializable {

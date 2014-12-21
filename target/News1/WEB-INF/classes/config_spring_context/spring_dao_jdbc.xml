@@ -7,36 +7,19 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-       
-       <import resource="classpath:/config/spring-pool.xml" />
-       
+             
        <context:property-placeholder location='classpath:config.properties'/>
 
-	<!-- ========================================================================= -->
-	<!-- Connection pool -->
-	<bean id="connectionPool" class="com.epam.news.database.pool.ConnectionPool"
-	factory-method="getSinglePool"
-		 destroy-method="cleanUpPool">
-		
-	</bean>
 	
-	
-	<!-- DAO -->
-	<bean id="NewsDao" class="com.epam.news.database.dao.NewsDAO">
-		<property name="connectionPool">
-			<ref bean="connectionPool" />
-		</property>
-	</bean> 
 	<!-- ========================================================================= -->
 	<!-- JDBC template -->
-	
 	<bean id = "jdbcDao" class="com.epam.news.database.dao.JdbcNewsDao">
 	<property name="dataSource">
 			<ref bean="dataSource"/>
 		</property>
 	</bean>
 	
-	
+	<!-- ========================================================================= -->
 	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -47,26 +30,16 @@
 		<!-- <property name="schemaNames" value="PUBLIC" /> -->
 	</bean>
 	<!-- ========================================================================= -->
-	<!-- Hibernate DB connection -->
-	<bean id="hibernateUtils" class="com.epam.news.util.HibernateUtil"></bean>
-	<bean id="newsDaoHibernate" class="com.epam.news.database.dao.NewsDAOHibernate">
-		<property name="hibernateUtil">
-			<ref bean="hibernateUtils" />
-		</property>
-	</bean>
-	<!-- END Hibernate DB connection -->
-	<!-- ========================================================================= -->
-	<!-- NewsService -->
 	
+	<!-- NewsService -->
 	<bean id="NewsService" class="com.epam.news.service.NewsService">
 		<!-- <property name="newsDao" ref="NewsDao" /> -->
 		<!-- <property name="newsDao" ref="jdbcDao" /> -->
-		<property name="newsDao" ref="newsDaoHibernate" />
+		<property name="newsDao" ref="jdbcDao" />
 		<!-- <property name="newsDao" ref="newsDaoJPA" /> -->
-		
-		
-		
 	</bean>
+<!-- ========================================================================= -->
+
 	
 	<!-- Actions -->
 	<bean
