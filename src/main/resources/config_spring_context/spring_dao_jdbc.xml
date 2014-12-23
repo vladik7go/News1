@@ -12,40 +12,23 @@
 
 	
 	<!-- ========================================================================= -->
-	<!-- JDBC template -->
+	<!-- JDBC-template-DAO -->
 	<bean id = "jdbcDao" class="com.epam.news.database.dao.JdbcNewsDao">
 	<property name="dataSource">
 			<ref bean="dataSource"/>
 		</property>
 	</bean>
 	
-	<!-- ========================================================================= -->
 	
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value='${db.driverClass}' />
-		<property name="url" value='${db.url}' />
-		<property name="username" value='${db.user}' />
-		<property name="password" value='${db.password}' />
-		<!-- <property name="schemaNames" value="PUBLIC" /> -->
-	</bean>
 	<!-- ========================================================================= -->
 	
 	<!-- NewsService -->
 	<bean id="NewsService" class="com.epam.news.service.NewsService">
-		<!-- <property name="newsDao" ref="NewsDao" /> -->
-		<!-- <property name="newsDao" ref="jdbcDao" /> -->
 		<property name="newsDao" ref="jdbcDao" />
-		<!-- <property name="newsDao" ref="newsDaoJPA" /> -->
 	</bean>
 <!-- ========================================================================= -->
 
 	
-	<!-- Actions -->
-	<bean
-		name="/NewsList, /ViewNews, /EditNews, /DeleteNews, /DeleteGroupOfNews, /AddNews, /SaveNews, /Cancel, /ChangeLocale, /Back"
-		id="newsAction" class="com.epam.news.action.NewsAction">
-		<property name="newsService" ref="NewsService" />
-	</bean>
+	
 	
 </beans>

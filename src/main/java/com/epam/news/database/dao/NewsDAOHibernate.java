@@ -7,13 +7,18 @@ import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+//import org.hibernate.classic.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.epam.news.entity.News;
 import com.epam.news.exception.DaoException;
-import com.epam.news.util.HibernateUtil;
+
 
 /**
  * This class implements DAO used with Hibernate
@@ -21,25 +26,44 @@ import com.epam.news.util.HibernateUtil;
  * @author Ivan_Filimonau
  *
  */
-public class NewsDAOHibernate implements INewsDao {
+public class NewsDAOHibernate  implements INewsDao {
 	private static final Logger logger = Logger
 			.getLogger(NewsDAOHibernate.class);
-	private static HibernateUtil hibernateUtil;
+//	private static HibernateUtil hibernateUtil;
+	private TransactionTemplate transactionTemplate;
 	private static final String NEWS_DATE_COLUMN = "date";
-	private static final SessionFactory sessions = HibernateUtil
-			.getSessionFactory();
+	private   SessionFactory sessionFactory ;
+	
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
-	public static HibernateUtil getHibernateUtil() {
+	/*public static HibernateUtil getHibernateUtil() {
 		return hibernateUtil;
 	}
 
 	public static void setHibernateUtil(HibernateUtil hibernateUtil) {
 		NewsDAOHibernate.hibernateUtil = hibernateUtil;
-	}
+	}*/
 
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionTemplate = new TransactionTemplate(transactionManager);
+	  }
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public List<News> getAll() throws DaoException {
-		Session session = sessions.getCurrentSession();
+
+		Session session = sessionFactory.getCurrentSession();
+		
 		List<News> list = new ArrayList<News>();
 		Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(News.class);
@@ -49,9 +73,13 @@ public class NewsDAOHibernate implements INewsDao {
 		return list;
 	}
 
+	
+	
 	@Override
 	public News getById(int id) throws DaoException {
-		Session session = sessions.getCurrentSession();
+		
+		
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		News news = new News();
 		news = (News) session.get(News.class, id);
@@ -61,7 +89,7 @@ public class NewsDAOHibernate implements INewsDao {
 
 	@Override
 	public int addNews(News news) throws DaoException {
-		Session session = sessions.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		session.save(news);
 
@@ -73,7 +101,7 @@ public class NewsDAOHibernate implements INewsDao {
 
 	@Override
 	public int updateNews(News news) throws DaoException {
-		Session session = sessions.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		news = (News) session.merge(news);
 		session.update(news);
@@ -85,7 +113,7 @@ public class NewsDAOHibernate implements INewsDao {
 
 	@Override
 	public int deleteManyNews(Integer[] ids) throws DaoException {
-		Session session = sessions.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Transaction transaction = session.beginTransaction();
 		Query query = session.getNamedQuery("deleteManyNewsQuery")
 				.setParameterList("deleteIds", ids);

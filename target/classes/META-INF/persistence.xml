@@ -8,11 +8,12 @@
 		
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
-			<property name="hibernate.connection.username" value="newsuser" />
+			<!-- <property name="hibernate.connection.username" value="newsuser" />
 			<property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
 			<property name="hibernate.connection.password" value="asdasd2" />
-			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+			<property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE" /> -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect" />
+			<property name="hibernate.jdbc.use_get_generated_keys" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>

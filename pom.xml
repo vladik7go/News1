@@ -22,11 +22,11 @@
 		<struts.version>1.3.10</struts.version>
 		<!-- Spring -->
 		<spring-framework.version>3.2.3.RELEASE</spring-framework.version>
-			<spring.version>3.2.3.RELEASE</spring.version>
+			<spring.version>4.0.0.RELEASE</spring.version>
 		
 		<!-- Hibernate / JPA -->
-		<!-- <hibernate.version>4.2.1.Final</hibernate.version>	 -->
 		<hibernate.version>4.3.7.Final</hibernate.version>	
+		<!-- <hibernate.version>3.6.10.Final</hibernate.version>	 -->
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -69,8 +69,14 @@
   <dependency>
     <groupId>org.springframework</groupId>
     <artifactId>spring-context</artifactId>
-    <version>3.2.3.RELEASE</version>
+    <version>${spring.version}</version>
 </dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
     
     <dependency>
                      <groupId>org.springframework</groupId>
@@ -87,7 +93,7 @@
              <dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-jdbc</artifactId>
-				<version>3.2.3.RELEASE</version>
+				<version>${spring.version}</version>
 			</dependency>
 			
 			<dependency>
@@ -151,26 +157,34 @@
 		<dependency>
              <groupId>org.hibernate</groupId>
              <artifactId>hibernate-entitymanager</artifactId>
+             <!-- very important for hibernateDaoSupport -->
              <version>${hibernate.version}</version>
-         </dependency>            
-         <dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-commons-annotations</artifactId>
-	<version>3.2.0.Final</version>
-</dependency>
+         </dependency>  
+                   
+       <dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>4.0.5.Final</version>
+		</dependency>
 
          <dependency>
              <groupId>org.hibernate</groupId>
              <artifactId>hibernate-core
              </artifactId>
-             <version>${hibernate.version}</version>
+            <version>${hibernate.version}</version>
          </dependency>  
          
          <dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+         
+        <!--  <dependency>
 	<groupId>javax.persistence</groupId>
 	<artifactId>persistence-api</artifactId>
 	<version>1.0.2</version>
-</dependency>
+</dependency> -->
 		
 		<!-- Log4j -->
 		<dependency>

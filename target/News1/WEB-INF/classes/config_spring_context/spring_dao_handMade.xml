@@ -18,32 +18,22 @@
 		
 	</bean>
 	
-	
-	<!-- DAO -->
+	<!-- ========================================================================= -->
+	<!-- DAO handMade -->
 	<bean id="NewsDao" class="com.epam.news.database.dao.NewsDAO">
 		<property name="connectionPool">
 			<ref bean="connectionPool" />
 		</property>
 	</bean> 
 	<!-- ========================================================================= -->
-	
-	
 	<!-- NewsService -->
 	
 	<bean id="NewsService" class="com.epam.news.service.NewsService">
-		<!-- <property name="newsDao" ref="NewsDao" /> -->
-		<!-- <property name="newsDao" ref="jdbcDao" /> -->
 		<property name="newsDao" ref="NewsDao" />
-		<!-- <property name="newsDao" ref="newsDaoJPA" /> -->
 	</bean>
 	
 	<!-- ========================================================================= -->
 	
-	<!-- Actions -->
-	<bean
-		name="/NewsList, /ViewNews, /EditNews, /DeleteNews, /DeleteGroupOfNews, /AddNews, /SaveNews, /Cancel, /ChangeLocale, /Back"
-		id="newsAction" class="com.epam.news.action.NewsAction">
-		<property name="newsService" ref="NewsService" />
-	</bean>
+	
 	
 </beans>

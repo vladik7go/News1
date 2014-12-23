@@ -7,9 +7,7 @@ com\epam\news\action\NewsAction.class
 com\epam\news\database\dao\JdbcNewsDao$1.class
 com\epam\news\service\NewsService.class
 com\epam\news\database\dao\NewsDAOHibernate.class
-com\epam\news\util\HibernateUtil.class
 com\epam\news\database\dao\NewsDAO.class
-com\epam\news\util\EntityManagerFactoryWrapper.class
 com\epam\news\util\DateConverter.class
 com\epam\news\database\pool\ConnectionPool.class
 com\epam\news\form\NewsForm.class

@@ -19,9 +19,6 @@ import javax.persistence.Table;
  * @author Ivan_Filimonau
  *
  */
-@NamedQueries({
-@NamedQuery(name = "newsFindAll", query = "FROM News n ORDER BY date DESC, id DESC"),
-@NamedQuery(name = "deleteManyNewsQuery", query = "DELETE FROM News WHERE id IN(:deleteIds)") })
 @Entity
 @Table(name = "NEWS")
 public class News implements Serializable {
