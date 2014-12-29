@@ -1,6 +1,7 @@
 package com.epam.news.action;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -47,6 +48,7 @@ public final class NewsAction extends MappingDispatchAction {
 	 */
 	private static final String REFERER = "referer";
 	private NewsService newsService;
+	private int objectsOnPage;
 
 	/**
 	 * @return the newsService
@@ -61,6 +63,14 @@ public final class NewsAction extends MappingDispatchAction {
 	 */
 	public void setNewsService(NewsService newsService) {
 		this.newsService = newsService;
+	}
+
+	public int getObjectsOnPage() {
+		return objectsOnPage;
+	}
+
+	public void setObjectsOnPage(int objectsOnPage) {
+		this.objectsOnPage = objectsOnPage;
 	}
 
 	/**
@@ -88,10 +98,29 @@ public final class NewsAction extends MappingDispatchAction {
 		String target = ERROR_PAGE;
 		request.getSession().setAttribute(PREVIOUS_PAGE, NEWS_LIST_PAGE);
 		NewsForm newsForm = (NewsForm) form;
-
 		List<News> newsList = null;
+		List<Integer> totalPages = new ArrayList<Integer>();
+		log.info("target: " + newsForm.getTargetPage());
+		log.info("number of rows: " + newsService.getNumberOfRows());
+		log.info("object on page: " + objectsOnPage);
+		int numberOfRows = newsService.getNumberOfRows();
+		int maxPage = numberOfRows / objectsOnPage;
+		log.info("result of dev: " + maxPage);
+		if (numberOfRows % (int) objectsOnPage != 0) {
+			maxPage++;
+		}
+		for (int i = 1; i <= maxPage; i++) {
+			totalPages.add(i);
+		}
 		try {
-			newsList = newsService.getAll();
+			log.info(totalPages);
+			newsForm.setTotalPages(totalPages);
+			if (newsForm.getTargetPage() == 0) {
+				newsForm.setTargetPage(1);
+			}
+			log.info("Objects on page: " + objectsOnPage);
+			newsList = newsService.getAll(newsForm.getTargetPage(),
+					objectsOnPage);
 		} catch (DaoException e) {
 			log.error(e.getMessage(), e);
 		}

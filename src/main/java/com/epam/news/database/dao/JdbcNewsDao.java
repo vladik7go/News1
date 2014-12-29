@@ -30,18 +30,22 @@ import com.epam.news.exception.DaoException;
 @SuppressWarnings("deprecation")
 public class JdbcNewsDao extends SimpleJdbcDaoSupport implements INewsDao {
 	public static Logger log = Logger.getLogger(JdbcNewsDao.class);
-
 	private static final String GET_ALL_QUERY = "SELECT * FROM news ORDER BY news_date desc,id desc";
+	private static final String GET_NUMBER_OF_ROWS_QUERY = " SELECT COUNT(*) FROM news";
 	private static final String GET_BY_ID_QUERY = "SELECT * FROM news WHERE id=?";
 	private static final String ADD_NEWS_QUERY = "INSERT INTO news(title,news_date,brief,content) VALUES (?,?,?,?)";
+	private static final String GET_ALL_BETWEEN_QUERY = "select * from ( select a.*, ROWNUM rnum from ( select * from news order by news.NEWS_DATE desc, news.id asc ) a where rownum <= ? ) where rnum >= ? ";// First
+	// BIG,
+	// second
+	// SMALL
 	// private static final String ADD_NEWS_QUERY =
 	// "INSERT INTO news(title,news_date,brief,content) VALUES (:title, :news_date, :brief, :content)";
 	private static final String UPDATE_NEWS_QUERY = "UPDATE news SET title=?, news_date=?, brief=?, content=? WHERE id=?";
 	private static final String DELETE_MANY_NEWS_QUERY = "DELETE FROM news WHERE id IN (";
 
 	/**
-	 * This anonymous class provides method mapRow, that returns filled with data
-	 * News object.
+	 * This anonymous class provides method mapRow, that returns filled with
+	 * data News object.
 	 */
 	private RowMapper<News> rowMapper = new RowMapper<News>() {
 		@Override
@@ -59,10 +63,37 @@ public class JdbcNewsDao extends SimpleJdbcDaoSupport implements INewsDao {
 	};
 
 	@Override
+	public int countRows() {
+		int numberOfRows = getSimpleJdbcTemplate().queryForInt(
+				GET_NUMBER_OF_ROWS_QUERY);
+
+		return numberOfRows;
+	}
+
+	@Override
 	public List<News> getAll() throws DaoException {
 		List<News> allNews = new ArrayList<News>();
 		allNews = getSimpleJdbcTemplate().query(GET_ALL_QUERY,
 				ParameterizedBeanPropertyRowMapper.newInstance(News.class));
+
+		return allNews;
+	}
+
+	/**
+	 * This method perform paging and ordering(by date, then - by ID).
+	 * 
+	 */
+	@Override
+	public List<News> getAll(int targetPage, int objectsOnPage)
+			throws DaoException {
+		log.info("Called getAll with params method (targetPage, objectsOnPage)"
+						+ targetPage + " " + objectsOnPage);
+		List<News> allNews = new ArrayList<News>();
+		int begin = 1 + (targetPage * (int) objectsOnPage) - objectsOnPage;
+		int end = targetPage * (int) objectsOnPage;
+		allNews = getSimpleJdbcTemplate().query(GET_ALL_BETWEEN_QUERY,
+				ParameterizedBeanPropertyRowMapper.newInstance(News.class),
+				end, begin);
 
 		return allNews;
 

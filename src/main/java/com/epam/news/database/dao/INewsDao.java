@@ -15,6 +15,13 @@ import com.epam.news.exception.TechnicalException;
 public interface INewsDao {
 
 	/**
+	 * This method calculate number of rows in table.
+	 * 
+	 * @return
+	 */
+	public int countRows();
+
+	/**
 	 * Get all news from database
 	 * 
 	 * @return - List of News objects
@@ -44,7 +51,7 @@ public interface INewsDao {
 	 * @throws TechnicalException
 	 * @throws DaoException
 	 */
-	public int addNews(News news) throws  DaoException;
+	public int addNews(News news) throws DaoException;
 
 	/**
 	 * Update (edit) one single news.
@@ -67,5 +74,18 @@ public interface INewsDao {
 	 * @throws DaoException
 	 */
 	public int deleteManyNews(Integer[] ids) throws DaoException;
+
+	/**
+	 * This method perform paging and ordering(by date, then - by ID).
+	 * 
+	 * @param targetPage
+	 *            - what page user wants to show.
+	 * @param objectsOnPage
+	 *            - parameter set in properties file. How many NEWS should be
+	 *            printed on one screen.
+	 * @return - List with NEWS objects.
+	 * @throws DaoException
+	 */
+	List<News> getAll(int targetPage, int objectsOnPage) throws DaoException;
 
 }

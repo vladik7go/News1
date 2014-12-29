@@ -23,7 +23,8 @@ import com.epam.news.exception.DaoException;
  */
 public class NewsDAOJpa implements INewsDao {
 	private static final Logger logger = Logger.getLogger(NewsDAOJpa.class);
-
+	private static final String QUERY_COUNT_NEWS = " SELECT COUNT(*) FROM news";
+	private static final String QUERY_SELECT_ALL_NEWS = " SELECT n FROM News n ORDER BY n.date DESC, n.id ASC";
 	private EntityManagerFactory entityManagerFactory;
 
 	public EntityManagerFactory getEntityManagerFactory() {
@@ -36,12 +37,33 @@ public class NewsDAOJpa implements INewsDao {
 	}
 
 	@Override
+	public int countRows() {
+		EntityManager em = entityManagerFactory.createEntityManager();
+		Query q = em.createNativeQuery(QUERY_COUNT_NEWS);
+		int counter = ((Number) q.getSingleResult()).intValue();
+		return counter;
+	}
+
+	@Override
 	public List<News> getAll() throws DaoException {
 		List<News> list = new ArrayList<News>();
 		entityManagerFactory.createEntityManager();
 		EntityManager em = entityManagerFactory.createEntityManager();
 		list = (List<News>) em.createQuery(
 				"FROM News n ORDER BY date DESC, id DESC").getResultList();
+		em.close();
+		return list;
+	}
+
+	@Override
+	public List<News> getAll(int targetPage, int objectsOnPage)
+			throws DaoException {
+		List<News> list = new ArrayList<News>();
+		EntityManager em = entityManagerFactory.createEntityManager();
+		Query query = em.createQuery(QUERY_SELECT_ALL_NEWS);
+		query.setFirstResult((targetPage - 1) * objectsOnPage);
+		query.setMaxResults(objectsOnPage);
+		list = (List<News>) query.getResultList();
 		em.close();
 		return list;
 	}

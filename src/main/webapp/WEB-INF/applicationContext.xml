@@ -11,10 +11,10 @@
        <context:property-placeholder location='classpath:config.properties'/>
        
        <!-- ========================================================================= -->
-        <import resource="classpath:/config_spring_context/spring_dao_hibernate.xml" />
-      <!--  <import resource="classpath:/config_spring_context/spring_dao_jdbc.xml" /> -->
-      <!--  <import resource="classpath:/config_spring_context/spring_dao_jpa.xml" /> -->
-      <!-- <import resource="classpath:/config_spring_context/spring_dao_handMade.xml" /> -->
+<!--         <import resource="classpath:/config_spring_context/spring_dao_hibernate.xml" /> -->
+<!--        <import resource="classpath:/config_spring_context/spring_dao_jdbc.xml" /> -->
+       <import resource="classpath:/config_spring_context/spring_dao_jpa.xml" />
+<!--       <import resource="classpath:/config_spring_context/spring_dao_handMade.xml" /> -->
              
        <!-- ========================================================================= -->
 	<bean id="dataSource"
@@ -30,6 +30,7 @@
 		name="/NewsList, /ViewNews, /EditNews, /DeleteNews, /DeleteGroupOfNews, /AddNews, /SaveNews, /Cancel, /ChangeLocale, /Back"
 		id="newsAction" class="com.epam.news.action.NewsAction">
 		<property name="newsService" ref="NewsService" />
+		<property name="objectsOnPage" value='${page.objects.number}' />
 	</bean>
 	
 </beans>

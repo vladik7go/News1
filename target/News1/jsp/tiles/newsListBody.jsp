@@ -44,6 +44,14 @@
 		</table>
 	</logic:iterate>
 	<logic:notEmpty name="newsForm" property="newsList">
+	
+	<logic:iterate id="Page" property="totalPages" name="newsForm">
+	<html:link action="NewsList" paramId="targetPage" paramName="Page"   >
+		<bean:write name="Page" />
+		
+	</html:link>
+	</logic:iterate>
+	
 		<table class="newsListTable">
 			<tr>
 				<td class="afterTableButtons"><html:submit>

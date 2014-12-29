@@ -10,7 +10,6 @@ import com.epam.news.entity.News;
 import com.epam.news.exception.DaoException;
 import com.epam.news.exception.TechnicalException;
 
-
 /**
  * This class provides logic for NewsAction class.
  * 
@@ -64,6 +63,12 @@ public class NewsService {
 		return result;
 	}
 
+	public List<News> getAll(int targetPage, int objectsOnPage)
+			throws DaoException {
+
+		return newsDao.getAll( targetPage, objectsOnPage);
+	}
+
 	/**
 	 * @return
 	 * @throws DaoException
@@ -71,6 +76,10 @@ public class NewsService {
 	public List<News> getAll() throws DaoException {
 
 		return newsDao.getAll();
+	}
+
+	public int getNumberOfRows() {
+		return newsDao.countRows();
 	}
 
 	/**

@@ -39,9 +39,21 @@ public class NewsForm extends ValidatorForm {
     private String lang;
     private Integer[] selectedItems;
     private String dateString;
+    private int targetPage;
+    private List<Integer> totalPages;
 
 
-    /**
+   
+
+	public int getTargetPage() {
+		return targetPage;
+	}
+
+	public void setTargetPage(int targetPage) {
+		this.targetPage = targetPage;
+	}
+
+	/**
      * @return the dateString
      */
     public String getDateString() {
@@ -115,6 +127,19 @@ public class NewsForm extends ValidatorForm {
     public void setLang(String lang) {
 	this.lang = lang;
     }
+
+	
+	
+
+	public List<Integer> getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(List<Integer> totalPages) {
+		this.totalPages = totalPages;
+	}
+
+	
 
     /**
      * @return the locale

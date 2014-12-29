@@ -58,6 +58,12 @@ public class NewsDAO implements INewsDao {
 		this.connectionPool = connectionPool;
 	}
 
+	@Override
+	public int countRows() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -323,6 +329,18 @@ public class NewsDAO implements INewsDao {
 			}
 		}
 		return query.toString();
+	}
+
+	/**
+	 * 
+	 * This method is not working with paging for that very DAO !!! Just mock.
+	 * 
+	 */
+	@Override
+	public List<News> getAll(int targetPage, int objectsOnPage)
+			throws DaoException {
+
+		return getAll();
 	}
 
 }
