@@ -14,6 +14,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -58,11 +60,11 @@ public class NewsDAOHibernate implements INewsDao {
 	@Override
 	public int countRows() {
 		Session session = sessionFactory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
+//		Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(News.class);
 		int maxPage = ((Number) criteria.setProjection(Projections.rowCount())
 				.uniqueResult()).intValue();
-		transaction.commit();
+//		transaction.commit();
 		return maxPage;
 	}
 
@@ -79,18 +81,19 @@ public class NewsDAOHibernate implements INewsDao {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public List<News> getAll(int targetPage, int objectsOnPage)
 			throws DaoException {
 		Session session = sessionFactory.getCurrentSession();
 		List<News> list = new ArrayList<News>();
-		Transaction transaction = session.beginTransaction();
+//		Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(News.class);
 		criteria.setFirstResult((targetPage - 1) * objectsOnPage);
 		criteria.setMaxResults(objectsOnPage);
 		criteria = criteria.addOrder(Order.desc(NEWS_DATE_COLUMN)).addOrder(
 				Order.asc(NEWS_ID_COLUMN));
 		list = (List<News>) criteria.list();
-		transaction.commit();
+//		transaction.commit();
 		return list;
 	}
 
@@ -98,20 +101,20 @@ public class NewsDAOHibernate implements INewsDao {
 	public News getById(int id) throws DaoException {
 
 		Session session = sessionFactory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
+//		Transaction transaction = session.beginTransaction();
 		News news = new News();
 		news = (News) session.get(News.class, id);
-		transaction.commit();
+//		transaction.commit();
 		return news;
 	}
 
 	@Override
 	public int addNews(News news) throws DaoException {
 		Session session = sessionFactory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
+//		Transaction transaction = session.beginTransaction();
 		session.save(news);
 
-		transaction.commit();
+//		transaction.commit();
 
 		int id = news.getId();
 		return id;
@@ -120,11 +123,11 @@ public class NewsDAOHibernate implements INewsDao {
 	@Override
 	public int updateNews(News news) throws DaoException {
 		Session session = sessionFactory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
+//		Transaction transaction = session.beginTransaction();
 		news = (News) session.merge(news);
 		session.update(news);
 
-		transaction.commit();
+//		transaction.commit();
 
 		return 1;
 	}
@@ -132,12 +135,12 @@ public class NewsDAOHibernate implements INewsDao {
 	@Override
 	public int deleteManyNews(Integer[] ids) throws DaoException {
 		Session session = sessionFactory.getCurrentSession();
-		Transaction transaction = session.beginTransaction();
+//		Transaction transaction = session.beginTransaction();
 		Query query = session.getNamedQuery("deleteManyNewsQuery")
 				.setParameterList("deleteIds", ids);
 		int result = query.executeUpdate();
 
-		transaction.commit();
+//		transaction.commit();
 
 		return result;
 	}

@@ -1,2 +1,5 @@
-com\epam\news\database\dao\NewsDAOTest.class
+com\epam\news\database\dao\NewsJPATest.class
 com\epam\news\database\pool\ConnectionPoolTest.class
+com\epam\news\database\dao\NewsHibernateTest.class
+com\epam\news\database\dao\NewsAbstractTest.class
+com\epam\news\database\dao\NewsJDBCTest.class

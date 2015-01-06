@@ -11,9 +11,9 @@
        <context:property-placeholder location='classpath:config.properties'/>
        
        <!-- ========================================================================= -->
-        <import resource="classpath:/config_spring_context/spring_dao_hibernate.xml" />
+<!--         <import resource="classpath:/config_spring_context/spring_dao_hibernate.xml" /> -->
 <!--        <import resource="classpath:/config_spring_context/spring_dao_jdbc.xml" /> -->
-<!--        <import resource="classpath:/config_spring_context/spring_dao_jpa.xml" /> -->
+       <import resource="classpath:/config_spring_context/spring_dao_jpa.xml" />
 <!--       <import resource="classpath:/config_spring_context/spring_dao_handMade.xml" /> -->
              
        <!-- ========================================================================= -->
@@ -23,6 +23,7 @@
 		<property name="url" value='${db.url}' />
 		<property name="username" value='${db.user}' />
 		<property name="password" value='${db.password}' />
+		
 	</bean>
 	<!-- ========================================================================= -->
 	<!-- Actions -->

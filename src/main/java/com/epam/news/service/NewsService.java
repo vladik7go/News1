@@ -3,9 +3,10 @@ package com.epam.news.service;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.epam.news.database.dao.INewsDao;
-
 import com.epam.news.entity.News;
 import com.epam.news.exception.DaoException;
 import com.epam.news.exception.TechnicalException;
@@ -16,6 +17,7 @@ import com.epam.news.exception.TechnicalException;
  * @author Ivan_Filimonau
  *
  */
+@Transactional
 public class NewsService {
 	private static final Logger log = Logger.getLogger(NewsService.class);
 	private INewsDao newsDao;
@@ -63,10 +65,11 @@ public class NewsService {
 		return result;
 	}
 
+	
 	public List<News> getAll(int targetPage, int objectsOnPage)
 			throws DaoException {
 
-		return newsDao.getAll( targetPage, objectsOnPage);
+		return newsDao.getAll(targetPage, objectsOnPage);
 	}
 
 	/**
@@ -78,6 +81,10 @@ public class NewsService {
 		return newsDao.getAll();
 	}
 
+	/**
+	 * This method calculate number of rows in table.
+	 * @return - number of rows in the table.
+	 */
 	public int getNumberOfRows() {
 		return newsDao.countRows();
 	}

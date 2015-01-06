@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	default-autowire="byName" default-lazy-init="true">
+
+	
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="testuser" />
+		<property name="password" value="asdasd2" />
+		<!-- <property name="schemaNames" value="PUBLIC" /> -->
+	</bean>
+	<!-- ========================================================================= -->
+	<bean id="newsDaoHibernate" class="com.epam.news.database.dao.NewsDAOHibernate">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<!-- ========================================================================= -->
+	<!-- NewsService -->
+	<bean id="NewsService" class="com.epam.news.service.NewsService">
+		<property name="newsDao" ref="newsDaoHibernate" />
+	</bean>
+	
+	<!-- ========================================================================= -->
+	<bean id="sessionFactory" 
+     class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+ 		<property name="configLocation" value="classpath:/hibernate.cfg.xml" />
+<!--  	    <property name="dataSource"> -->
+<!--     		  <ref bean="dataSource"/> -->
+<!--     	</property> -->
+    </bean>
+	
+	<!-- ========================================================================= -->
+	
+	<tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean> 
+	
+
+</beans>

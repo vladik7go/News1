@@ -15,19 +15,27 @@
 	
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="dataSource" ref="dataSource"/>
-    <property name="jpaVendorAdapter">
-        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-            <property name="showSql" value="true"/>
-        </bean>
-    </property>
+    <property name="jpaDialect" ref="jpaDialect"/>
+    <property name="jpaVendorAdapter" ref="jpaAdapter"/>
 </bean>
+
+
+ <bean id="jpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" lazy-init="true">
+
+       <property name="databasePlatform" value="org.hibernate.dialect.OracleDialect" />
+
+       <property name="database" value="ORACLE" />
+
+       <property name="showSql" value="false" />
+
+    </bean>
+    
+<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
 	
 	<!-- ========================================================================= -->
 	
 	<bean id="newsDaoJPA" class="com.epam.news.database.dao.NewsDAOJpa">
-		<property name="entityManagerFactory">
-			<ref bean="entityManagerFactory" />
-		</property>
+		
 	</bean>
 	
 	<!-- ========================================================================= -->
@@ -40,5 +48,17 @@
 	</bean>
 	
 	<!-- ========================================================================= -->
+		
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaDialect" ref="jpaDialect" />
+	</bean>
+    
+   
 
 </beans>

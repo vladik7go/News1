@@ -23,6 +23,7 @@
 		<property name="url" value='${db.url}' />
 		<property name="username" value='${db.user}' />
 		<property name="password" value='${db.password}' />
+		
 	</bean>
 	<!-- ========================================================================= -->
 	<!-- Actions -->

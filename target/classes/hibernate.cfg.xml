@@ -20,7 +20,7 @@
         <property name="dialect">org.hibernate.dialect.OracleDialect</property>
 
         <!-- Enable Hibernate's automatic session context management -->
-        <property name="current_session_context_class">thread</property>
+<!--         <property name="current_session_context_class">thread</property> -->
 
         <!-- Disable the second-level cache  -->
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
@@ -33,6 +33,14 @@
         
         <!-- getGeneratedKeys() support  enable -->
         <property name="hibernate.jdbc.use_get_generated_keys">true</property>
+        <!--Enabling Autocommit -->
+<!-- <property name="connection.autocommit">true</property> -->
+
+<!-- <property name="transaction.factory_class">org.hibernate.transaction.CMTTransactionFactory</property> -->
+<!-- <property name="transaction.manager_lookup_class">org.hibernate.transaction.JRun4TransactionManagerLookup</property> -->
+<!-- <property name="hibernate.transaction.flush_before_completion">true</property> -->
+<!-- <property name="hibernate.transaction.auto_close_session">true</property> -->
+<!-- <property name="hibernate.connection.release_mode">after_transaction</property> -->
 
         <mapping resource="News.hbm.xml"/>
 
